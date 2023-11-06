@@ -36,15 +36,6 @@ Route::get('/password-reset-notification', function () {
 Route::get('/dashboard', function () {
     $employees = Employees::all();
     $employeesExceptFirst = $employees->slice(1);
-    //////////////
-    // $breaks = DB::table('employee_logs')
-    //             ->where('employeeId', 8)
-    //             ->orderBy('time','DESC')
-    //             ->first();
-
-    // dd($breaks);
-    //////////////
-    // dd($employees->last()->employeeLogs);
     return view('dashboard',['employees' => $employeesExceptFirst]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

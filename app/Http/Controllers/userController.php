@@ -107,7 +107,8 @@ class userController extends Controller
      }
      //store employee data
      public function storeEmployee(Request $request)
-     {    
+     {
+      // return $request->all();
         // Generate a random password
         $autoPassword = Str::random(8);
 
@@ -132,34 +133,55 @@ class userController extends Controller
             'nickName' => $request->nickName,          
             'fathersName' => $request->fathersName,          
             'gender' => $request->gender,          
-            'presentAddress' => $request->presentAddress,          
-            'permanentAddress' => $request->permanentAddress,          
-            'dob' => $request->dob,          
-            'phone' => $request->phone,          
+            'dob' => $request->dob, 
+            'phone1' => $request->phone1,          
+            'phone2' => $request->phone2,          
             'referenceName' => $request->referenceName,          
             'referencePhone' => $request->referencePhone,          
             'govId' => $request->govId,          
-            'govIdNo' => $request->govIdNo,          
-            'photo' => $photo_path,          
+            'govIdNo' => $request->govIdNo,
+            'whatsappNo' => $request->whatsappNo,        
+
+            'address1' => $request->address1,          
+            'townCity1' => $request->townCity1,  
+            'postZipCode1' => $request->postZipCode1,  
+            'state1' => $request->state1,  
+            'country1' => $request->country1,  
+
+            'address2' => $request->address2,          
+            'townCity2' => $request->townCity2,  
+            'postZipCode2' => $request->postZipCode2,  
+            'state2' => $request->state2,  
+            'country2' => $request->country2,  
+
             'department' => $request->department,         
             'designation' => $request->designation,         
             'joinDate' => $request->joinDate,         
             'leaveDate' => $request->leaveDate,         
             'status' => $request->status,         
             'shift' => $request->shift,         
-            'hiringManager' => $request->hiringManager,
+            'hiringManager' => $request->hiringManager,           
+            'photo' => $photo_path,
+            'salaryType' => $request->salaryType,
+            'payScale' => $request->payScale,
         ]);
 
         // store financial data
         $financial = Financial::create([
             'userId' => $user->id,
-            'salaryType' => $request->salaryType,          
-            'payScale' => $request->payScale,          
-            'accHolderName' => $request->accHolderName,          
-            'accNumber' => $request->accNumber,          
-            'bankName' => $request->bankName,          
-            'branch' => $request->branch,          
-            'branchCode' => $request->branchCode,
+            'salaryType' => $request->salaryType,
+            'payScale' => $request->payScale,
+            'bankName' => $request->bankName,
+            'accHolderName' => $request->accHolderName,
+            'accNumber' => $request->accNumber,
+            'bankSortCode' => $request->bankSortCode,
+            'bankRoutingCode' => $request->bankRoutingCode,
+            'swiftCode' => $request->swiftCode,
+            'address1' => $request->address1,
+            'address2' => $request->address2,
+            'townCity' => $request->townCity,
+            'stateProvision' => $request->stateProvision,
+            'country' => $request->country,
         ]);
 
          // Send the login details to the user's email
@@ -349,6 +371,84 @@ class userController extends Controller
         $departments = Department::all();    
         $designations = Designation::all();    
         return view('superAdmin.clients.create',['userTypes'=> $userTypes, 'departments'=> $departments, 'designations'=> $designations]);
+    }
+
+    public function storeClient(Request $request){
+      // return $request->all();
+      // Generate a random password
+      $autoPassword = Str::random(8);
+      // Save the user's photo
+      $photo = $request->file('photo');
+      $photo_name = $photo->getClientOriginalName();
+      $photo_storage = $photo->storeAs("public/uploads", $photo_name);
+      $photo_path = 'storage/uploads/'.$photo_name;
+      // store  user data
+      $user = User::create([
+            'userType' => $request->userType,
+            'email' => $request->email,          
+            'password' => Hash::make($autoPassword),           
+      ]);
+         
+      $phoneNumber = $request->countryCode.$request->phone;
+         
+      // store client data
+      $client = Clients::create([
+            'userId' => $user->id,
+            'firstName' => $request->firstName,          
+            'lastName' => $request->lastName,          
+            'nickName' => $request->nickName,
+            'phone1' => $phoneNumber,
+            'whatsappNo' => $request->whatsappNo,
+            'fathersName' => $request->fathersName,          
+            'gender' => $request->gender,          
+            'dob' => $request->dob,   
+            'phone2' => $request->phone2,          
+            'referenceName' => $request->referenceName,          
+            'referencePhone' => $request->referencePhone,          
+            'govId' => $request->govId,          
+            'govIdNo' => $request->govIdNo,          
+            'address1' => $request->address1,          
+            'townCity1' => $request->townCity1,  
+            'postZipCode1' => $request->postZipCode1,  
+            'state1' => $request->state1,  
+            'country1' => $request->country1,  
+            'address2' => $request->address2,          
+            'townCity2' => $request->townCity2,  
+            'postZipCode2' => $request->postZipCode2,  
+            'state2' => $request->state2,  
+            'country2' => $request->country2,  
+            'joinDate' => $request->joinDate,         
+            'leaveDate' => $request->leaveDate,         
+            'status' => $request->status,         
+            'photo' => $photo_path,
+      ]);
+
+      // store financial data
+      $financial = Financial::create([
+            'userId' => $user->id,   
+            'salaryType' => $request->salaryType,
+            'payScale' => $request->payScale,
+            'bankName' => $request->bankName,
+            'accHolderName' => $request->accHolderName,
+            'accNumber' => $request->accNumber,
+            'bankSortCode' => $request->bankSortCode,
+            'bankRoutingCode' => $request->bankRoutingCode,
+            'swiftCode' => $request->swiftCode,
+            'address1' => $request->address1,
+            'address2' => $request->address2,
+            'townCity' => $request->townCity,
+            'stateProvision' => $request->stateProvision,
+            'country' => $request->country,        
+      ]);
+
+         // Send the login details to the user's email
+         Mail::send('notification.clientInvitation', ['user' => $user, 'password' => $autoPassword], function($message) use ($user) {
+            $message->to($user->email)->subject('Your account has been created successfully');
+      });
+      
+      // Flash a success message and redirect back
+      session()->flash('success', 'Client created successfully..!!');
+      return redirect()->back();    
     }
 
     public function editClient($id)

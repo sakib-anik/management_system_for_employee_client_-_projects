@@ -29,6 +29,7 @@
                             <td>{{$employee->phone1}}</td>
                             <td>
                                 @php
+                                if (!function_exists('getLastStatus')) {
                                     function getLastStatus($employeeId) {
                                         $lastStatus = DB::table('employee_logs')
                                             ->select('status')
@@ -39,6 +40,7 @@
 
                                         return $lastStatus ?? 'No Status';
                                     }
+                                }
                                 @endphp
                                 {{-- {{ $employee->employeeLogs->status }} --}}
                                 @if (Cache::has('user-is-online-'.$employee->userId))

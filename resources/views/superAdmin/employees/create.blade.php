@@ -32,16 +32,15 @@
                                         <div class="col-md-6">
                                             <label for="firstName" class="mb-0">First Name</label>
                                             <div class="input-group mb-2">
-                                                <input type="hidden" name="profileId" value="{{Auth::user()->id}}">
                                                 <input type="text" name="firstName" class="form-control"
-                                                    value="{{Auth::user()->employees->firstName}}" disabled>
+                                                    placeholder="Enter First Name" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="lastName" class="mb-0">Last Name</label>
                                             <div class="input-group mb-2">
                                                 <input type="text" name="lastName" class="form-control"
-                                                    value="{{Auth::user()->employees->lastName}}" disabled>
+                                                    placeholder="Enter Last Name" required>
                                             </div>
                                         </div>
                                     </div>
@@ -50,7 +49,7 @@
                                             <label for="nickName" class="mb-0">Nick Name</label>
                                             <div class="input-group mb-2">
                                                 <input type="text" name="nickName" class="form-control"
-                                                    value="{{Auth::user()->employees->nickName}}" disabled>
+                                                    placeholder="Enter Nick name" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -84,8 +83,8 @@
                                         <div class="col-md-6">
                                             <label for="phone" class="mb-0">Phone</label>
                                             <div class="input-group mb-2">
-                                                <input type="text" name="phone" class="form-control"
-                                                    value="{{Auth::user()->employees->phone1}}" disabled>
+                                                <input type="text" name="phone1" class="form-control"
+                                                    placeholder="Primary Phone Number" required>
                                             </div>
                                         </div>
                                     </div>
@@ -100,8 +99,8 @@
                                         <div class="col-md-6">
                                             <label for="whatsappNo" class="mb-0">WhatsApp Number</label>
                                             <div class="input-group mb-2">
-                                                <input type="text" name="whatsappNo" class="form-control"
-                                                    value="{{Auth::user()->employees->whatsappNo}}" disabled>
+                                                <input type="text" name="whatsappNo" class="form-control" placeholder="WhatsApp Number"
+                                                    >
                                             </div>
                                         </div>
                                     </div>
@@ -262,7 +261,7 @@
                                             <div class="input-group mb-2">
                                                 <select id="department" name="department"
                                                     class="form-select form-control" required>
-                                                   
+                                                    <option value="">-- Select One --</option>
                                                     @foreach($departments as $key=> $department)
                                                     <option value="{{$department->id}}">
                                                         {{$department->department}}</option>
@@ -347,8 +346,9 @@
                                             <label for="salaryType" class="mb-0">Salary Type</label>
                                             <div class="input-group mb-2">
                                                 <select name="salaryType" class="form-select form-control" required>
-                                                    <option value="{{Auth::user()->employees->salaryType}}">
-                                                        {{Auth::user()->employees->salaryType}}</option>
+                                                    <option value="Monthly">Monthly</option>
+                                                    <option value="Weekly">Weekly</option>
+                                                    <option value="Daily">Daily</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -356,8 +356,9 @@
                                             <label for="payScale" class="mb-0">Pay Scale</label>
                                             <div class="input-group mb-2">
                                                 <select name="payScale" class="form-select form-control" required>
-                                                    <option value="{{Auth::user()->employees->payScale}}">
-                                                        {{Auth::user()->employees->payScale}}</option>
+                                                    <option value="10000">10000</option>
+                                                    <option value="2400">2400</option>
+                                                    <option value="50">50</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -479,11 +480,12 @@
                 <label for="userType" class="mb-0">User Type</label>
                 <div class="input-group mb-2">
                     <select name="userType" class="form-select form-control" required>
-                        <option value="">--Select User Type--</option>
                         @foreach($userTypes as $key=> $userType)
-                        <option value="{{$userType->id}}">
-                            {{$userType->type}}
-                        </option>
+                        @if($userType->type === 'Employee')
+                            <option value="{{ $userType->id }}">
+                                {{ $userType->type }}
+                                </option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

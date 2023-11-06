@@ -32,16 +32,15 @@
                                         <div class="col-md-6">
                                             <label for="firstName" class="mb-0">First Name</label>
                                             <div class="input-group mb-2">
-                                                <input type="hidden" name="profileId" value="{{Auth::user()->id}}">
                                                 <input type="text" name="firstName" class="form-control"
-                                                    value="">
+                                                    placeholder="Enter First Name" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="lastName" class="mb-0">Last Name</label>
                                             <div class="input-group mb-2">
                                                 <input type="text" name="lastName" class="form-control"
-                                                    value="">
+                                                    placeholder="Enter Last Name" required>
                                             </div>
                                         </div>
                                     </div>
@@ -50,7 +49,7 @@
                                             <label for="nickName" class="mb-0">Nick Name</label>
                                             <div class="input-group mb-2">
                                                 <input type="text" name="nickName" class="form-control"
-                                                    value="">
+                                                    placeholder="Enter Nick name" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -84,8 +83,8 @@
                                         <div class="col-md-6">
                                             <label for="phone" class="mb-0">Phone</label>
                                             <div class="input-group mb-2">
-                                                <input type="text" name="phone" class="form-control"
-                                                    value="">
+                                                <input type="text" name="phone1" class="form-control"
+                                                    placeholder="Primary Phone Number" required>
                                             </div>
                                         </div>
                                     </div>
@@ -100,8 +99,8 @@
                                         <div class="col-md-6">
                                             <label for="whatsappNo" class="mb-0">WhatsApp Number</label>
                                             <div class="input-group mb-2">
-                                                <input type="text" name="whatsappNo" class="form-control"
-                                                    value="">
+                                                <input type="text" name="whatsappNo" class="form-control" placeholder="WhatsApp Number"
+                                                    >
                                             </div>
                                         </div>
                                     </div>
@@ -411,11 +410,12 @@
                                             <label for="userType" class="mb-0">User Type</label>
                                             <div class="input-group mb-2">
                                                 <select name="userType" class="form-select form-control" required>
-                                                    <option value="">--Select User Type--</option>
                                                     @foreach($userTypes as $key=> $userType)
-                                                    <option value="{{$userType->id}}">
-                                                        {{$userType->type}}
-                                                    </option>
+                                                    @if($userType->type === 'Client')
+                                                        <option value="{{ $userType->id }}">
+                                                        {{ $userType->type }}
+                                                        </option>
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                             </div>

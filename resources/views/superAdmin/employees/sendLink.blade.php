@@ -111,7 +111,7 @@
                                     <div class="col">
                                         <label for="whatsappNumber" class="mb-0">Whatsapp</label>
                                         <div class="input-group mb-2">
-                                            <input type="text" name="whatsappNumber" class="form-control">
+                                            <input type="text" name="whatsappNumber" class="form-control" placeholder="Enter Whatsapp Number">
                                         </div>
                                     </div>
                                     <div class="row mb-2">
@@ -120,7 +120,7 @@
                                             <div class="input-group mb-2">
                                                 <select id="department" name="department"
                                                     class="form-select form-control" required>
-                                                   
+                                                    <option value="">-- Select One --</option>
                                                     @foreach($departments as $key=> $department)
                                                     <option value="{{$department->id}}">
                                                         {{$department->department}}</option>
